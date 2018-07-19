@@ -24,7 +24,7 @@ body {
 header,
 article,
 footer {
-	height: 100%;
+	min-height: 100%;
   background: #fff center center fixed no-repeat;
   background-size: cover;
   color: #000;
@@ -35,7 +35,7 @@ footer {
   padding: 4em 20%;
   box-sizing:border-box;
 }
-footer { padding: 0; }
+footer { height: 100%; padding: 0; }
 .row {
 	display: flex;
 	flex-direction: row;
@@ -68,6 +68,39 @@ a {
 	color: inherit !important;
 	text-decoration: underline;
 }
+.box {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+  align-content: stretch;
+	width: 100%;
+}
+.box section {
+	width: 50%;
+	padding: 0 1em;
+}
+input, textarea, button {
+	box-sizing: border-box;
+	border: 1px solid #000;
+	width: 100%;
+	font-weight: 100;
+	padding: .25em;
+}
+input, textarea {
+	font-size: 1.2em;
+	margin-bottom: 2em;
+}
+input {
+	line-height: 2em;
+}
+textarea {
+	height: 7em;
+	resize: vertical;
+}
+button {
+	font-size: 2em;
+}
+.error { color: #a00; text-align: center; }
 @media (max-width: 800px) {
   header,
 	article {
@@ -77,6 +110,13 @@ a {
 	h2 { font-size: 1.7em; }
 	h3 { font-size: 1.3em; }
 	h4 { font-size: 1em; }
+	.box {
+		flex-direction: column;
+	}
+	.box section {
+		width: 100%;
+    padding: 0;
+	}
 }
 		</style>
 	</head>
@@ -87,12 +127,30 @@ a {
 		</header>
 		<article>
 			<h2>SERVICES</h2>
-			<br><br><br>
 			<div class="row">
 				<h4><img src="./assets/residential.png"><br>RESIDENTIAL</h4>
 				<h4><img src="./assets/commercial.png"><br>COMMERCIAL</h4>
 				<h4><img src="./assets/corporate.png"><br>CORPORATE</h4>
 			</div>
+			<br><br>
+			<form id="contactme" action="https://contact-form-service.herokuapp.com/v1/email?to=dan@danisilas.com" method="post">
+					<div class="box">
+					<section>
+						<input type="text" name="name" placeholder="name" value="">
+						<input type="text" name="contact" placeholder="phone or email">
+					</section>
+					<section>
+						<textarea name="message" placeholder="How can I help you?"></textarea>
+					</section>
+				</div>
+				<input type="hidden" name="token" value="a6d7515b31a2d7e85d">
+				<div class="box">
+					<section style="width:100%">
+						<button>Contact me</button>
+					</section>
+				</div>
+				<br>
+			</form>
 		</article>
 		<article class="dark" style="background-image: url(assets/about-background.jpg);">
 			<div style="text-align:left">
@@ -118,5 +176,67 @@ a {
 		<footer>
 			<iframe title="My Office Location" width="100%" height="100%" src="https://maps.google.com/maps?q=4%20Princes%20Lane%2C%20London&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 		</footer>
+		<script>
+			window.addEventListener('DOMContentLoaded', function() {
+				var nodes = {
+					error: document.createElement('p'),
+					amend: document.createElement('p'),
+					waiting: document.createElement('p'),
+					success: document.createElement('p'),
+					contactme: contactme
+				};
+				nodes.error.className = 'error';
+				nodes.error.appendChild(document.createTextNode('Something went wrong, please try again.'));
+				nodes.amend.className = 'error';
+				nodes.amend.appendChild(document.createTextNode('Please fill out name and contact method.'));
+				nodes.waiting.appendChild(document.createTextNode('Thank you'));
+				nodes.success.appendChild(document.createTextNode('I will return to you shortly'));
+
+				nodes.contactme.onsubmit = function(event) {
+					event.preventDefault();
+
+					nodes.error.parentNode && nodes.error.parentNode.removeChild(nodes.error);
+					nodes.amend.parentNode && nodes.amend.parentNode.removeChild(nodes.amend);
+					nodes.contactme.parentNode.replaceChild(nodes.waiting, nodes.contactme);
+
+					var data = [].reduce.call(
+						nodes.contactme,
+						function(accumulator, item) {
+							return item.value ? Object.assign(
+								accumulator,
+								{[item.name]: item.value}
+							) : accumulator;
+						},
+						{}
+					);
+
+					if (!data.name || !data.contact) {
+						nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+						nodes.contactme.parentNode.insertBefore(nodes.amend, nodes.contactme);
+						return;
+					}
+
+					fetch(nodes.contactme.action, {
+						headers: {'Content-Type': 'application/json; charset=utf-8'},
+						method: 'POST',
+						mode: 'cors',
+						cache: 'no-cache',
+						credentials: 'same-origin',
+						redirect: 'follow',
+						referrer: 'no-referrer',
+						body: JSON.stringify(data),
+					}).then(function (response) {
+						if (response.ok) {
+							nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
+						} else {
+							throw new Error(response.statusText);
+						}
+					}).catch(function (error) {
+						nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+						nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
+					});
+				}
+			});
+		</script>
 	</body>
 </html>
