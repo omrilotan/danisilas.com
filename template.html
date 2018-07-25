@@ -121,17 +121,11 @@ button {
 		</style>
 	</head>
 	<body>
-		<header class="dark" style="background-image: url(assets/header-background.jpg);">
-			<h1>DAN I SILAS, CHARTERED SURVEYOR</h1>
-			<h2>Handling commercial rent reviews and lease renewals all over the UK,<br>for over 30 years. Arbitration and Expert Witness work a speciality.</h2>
+		<header class="dark" style="background-image: url(./header-background.jpg);">
+			{{ header }}
 		</header>
 		<article>
-			<h2>SERVICES</h2>
-			<div class="row">
-				<h4><img src="./assets/residential.png"><br>RESIDENTIAL</h4>
-				<h4><img src="./assets/commercial.png"><br>COMMERCIAL</h4>
-				<h4><img src="./assets/corporate.png"><br>CORPORATE</h4>
-			</div>
+			{{ services }}
 			<br><br>
 			<form id="contactme" action="https://contact-form-service.herokuapp.com/v1/email?to=dan@danisilas.com" method="post">
 					<div class="box">
@@ -152,26 +146,13 @@ button {
 				<br>
 			</form>
 		</article>
-		<article class="dark" style="background-image: url(assets/about-background.jpg);">
+		<article class="dark" style="background-image: url(./about-background.jpg);">
 			<div style="text-align:left">
-				<h3>A Comprehensive, Professional and Efficient Property Service.</h3>
-				<h4>I offer a multi-disciplinary property service that includes:</h4>
-				<ul>
-					<li>Mortgage Valuation</li>
-					<li>Sales and Lettings of Property</li>
-					<li>Building Surveying</li>
-					<li>Rent Reviews</li>
-					<li>Development and Investment</li>
-					<li>Consultancy</li>
-					<li>Rating</li>
-					<li>Property Management</li>
-				</ul>
+				{{ about }}
 			</div>
 		</article>
 		<article>
-			<h1>+44 20 888 32277</h1>
-			<h2><a href="mailto:dan@danisilas.com">dan@danisilas.com</a></h2>
-			<h3><a href="https://google.com/maps/?q=4+Princes+Lane%2C+London">4 Princes Lane, London</a></h3>
+			{{ contact }}
 		</article>
 		<footer>
 			<iframe title="My Office Location" width="100%" height="100%" src="https://maps.google.com/maps?q=4%20Princes%20Lane%2C%20London&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>

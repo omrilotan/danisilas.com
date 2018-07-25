@@ -1,0 +1,19 @@
+{
+  "name": "danisilas.com",
+  "version": "1.0.0",
+  "description": "The website files for danisilas.com",
+  "homepage": "https://danisilas.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omrilotan/danialias.com.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "node build"
+  },
+  "devDependencies": {
+    "await-reduce": "^1.1.1",
+    "marked": "^0.4.0",
+    "paraphrase": "^1.2.2"
+  }
+}
