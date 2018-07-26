@@ -1,0 +1,21 @@
+{
+	"short_name": "Dan Silas",
+	"name": "Dan I Silas. Chartered Surveyor",
+	"icons": [
+		{
+			"src": "/assets/corporate.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/assets/corporate.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/",
+	"background_color": "#FFFFFF",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#FFFFFF"
+}

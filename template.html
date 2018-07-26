@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
   <head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
@@ -12,112 +12,7 @@
 		<link rel="manifest" href="/manifest.json">
 		<meta name="theme-color" content="#FFFFFF"/>
 		<style>
-* { margin: 0; padding: 0; border: 0; text-decoration: none; }
-html, body {
-	height: 100%;
-}
-body {
-  color: #000;
-  background: #fff;
-  font: 100 100%/1.4 -apple-system, "BlinkMacSystemFont", "Helvetica Neue", "Helvetica", "Lucida Grande", "Arial", sans-serif;
-}
-header,
-article,
-footer {
-	min-height: 100%;
-  background: #fff center center fixed no-repeat;
-  background-size: cover;
-  color: #000;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-  flex-direction: column;
-  padding: 4em 20%;
-  box-sizing:border-box;
-}
-footer { height: 100%; padding: 0; }
-.row {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-around;
-	width: 100%;
-}
-.row h4 {
-	text-align: center;
-}
-.dark {
-	background-color: #000;
-	color: #fff;
-}
-h1, h2, h3, h4 {
-	font-weight: 100;
-	letter-spacing: .03em;
-}
-h1 { font-size: 2.4em; }
-h2 { font-size: 1.8em; }
-h3 { font-size: 1.5em; }
-h4 { font-size: 1.2em; }
-h1, h2, h3, h4, p, ul {
-	margin: 0 0 .5em;
-}
-ul {
-	padding:0 0 0 1em;
-}
-a {
-	color: inherit !important;
-	text-decoration: underline;
-}
-.box {
-	display: flex;
-	flex-direction: row;
-	align-items: stretch;
-  align-content: stretch;
-	width: 100%;
-}
-.box section {
-	width: 50%;
-	padding: 0 1em;
-}
-input, textarea, button {
-	box-sizing: border-box;
-	border: 1px solid #000;
-	width: 100%;
-	font-weight: 100;
-	padding: .25em;
-}
-input, textarea {
-	font-size: 1.2em;
-	margin-bottom: 2em;
-}
-input {
-	line-height: 2em;
-}
-textarea {
-	height: 7em;
-	resize: vertical;
-}
-button {
-	font-size: 2em;
-}
-.error { color: #a00; text-align: center; }
-@media (max-width: 800px) {
-  header,
-	article {
-		padding: 2em;
-	}
-	h1 { font-size: 2em; }
-	h2 { font-size: 1.7em; }
-	h3 { font-size: 1.3em; }
-	h4 { font-size: 1em; }
-	.box {
-		flex-direction: column;
-	}
-	.box section {
-		width: 100%;
-    padding: 0;
-	}
-}
+			{{ styles }}
 		</style>
 	</head>
 	<body>
@@ -158,66 +53,7 @@ button {
 			<iframe title="My Office Location" width="100%" height="100%" src="https://maps.google.com/maps?q=4%20Princes%20Lane%2C%20London&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 		</footer>
 		<script>
-			window.addEventListener('DOMContentLoaded', function() {
-				var nodes = {
-					error: document.createElement('p'),
-					amend: document.createElement('p'),
-					waiting: document.createElement('p'),
-					success: document.createElement('p'),
-					contactme: contactme
-				};
-				nodes.error.className = 'error';
-				nodes.error.appendChild(document.createTextNode('Something went wrong, please try again.'));
-				nodes.amend.className = 'error';
-				nodes.amend.appendChild(document.createTextNode('Please fill out name and contact method.'));
-				nodes.waiting.appendChild(document.createTextNode('Thank you'));
-				nodes.success.appendChild(document.createTextNode('I will return to you shortly'));
-
-				nodes.contactme.onsubmit = function(event) {
-					event.preventDefault();
-
-					nodes.error.parentNode && nodes.error.parentNode.removeChild(nodes.error);
-					nodes.amend.parentNode && nodes.amend.parentNode.removeChild(nodes.amend);
-					nodes.contactme.parentNode.replaceChild(nodes.waiting, nodes.contactme);
-
-					var data = [].reduce.call(
-						nodes.contactme,
-						function(accumulator, item) {
-							return item.value ? Object.assign(
-								accumulator,
-								{[item.name]: item.value}
-							) : accumulator;
-						},
-						{}
-					);
-
-					if (!data.name || !data.contact) {
-						nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-						nodes.contactme.parentNode.insertBefore(nodes.amend, nodes.contactme);
-						return;
-					}
-
-					fetch(nodes.contactme.action, {
-						headers: {'Content-Type': 'application/json; charset=utf-8'},
-						method: 'POST',
-						mode: 'cors',
-						cache: 'no-cache',
-						credentials: 'same-origin',
-						redirect: 'follow',
-						referrer: 'no-referrer',
-						body: JSON.stringify(data),
-					}).then(function (response) {
-						if (response.ok) {
-							nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
-						} else {
-							throw new Error(response.statusText);
-						}
-					}).catch(function (error) {
-						nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-						nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
-					});
-				}
-			});
+{{ script }}
 		</script>
 	</body>
 </html>

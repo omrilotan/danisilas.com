@@ -1,23 +1,55 @@
 process.on('unhandledRejection', error => console.error(error));
 
 const {readdir, readFile, writeFile} = require('fs').promises;
+const read = async file => (await readFile(file)).toString();
 const phrase = require('paraphrase/double');
-const marked = require('marked');
 const reduce = require('await-reduce');
+const marked = require('marked');
+const {minify} = require('uglify-js');
+const {transform} = require('babel-core');
+const {promisify} = require('util');
+const tocss = async(data) => (
+	await promisify(
+		require('node-sass').render
+	)({data})
+).css.toString();
+const {processString} = require('uglifycss');
 
 (async() => {
-	const template = (await readFile('./template.html')).toString();
+	const template = await read('./template.html');
 
 	const data = await reduce(
-		(await readdir('./slides')).filter(name => name.endsWith('.md')),
+		(await readdir('./chunks')).filter(name => !name.startsWith('.')),
 		async(accumulator, slide) => Object.assign(
 			accumulator,
-			{[slide.replace(/^\d-/, '').replace(/.md$/, '')]: (
-					await marked(
-						(await readFile(`./slides/${slide}`)).toString(),
-						{}
-					)
-				).trim()
+			{
+				[slide.replace(/^\d-/, '').replace(/.(\w*)$/, '')]: (await (async() => {
+					const content = await read(`./chunks/${slide}`);
+
+					switch (slide.split('.').pop()) {
+						case 'md':
+							return await marked(content, {});
+						case 'js':
+							return [
+								transform,
+								minify,
+							].reduce(
+								(input, fn) => fn(input).code,
+								content
+							);
+						case 'scss':
+							return await reduce(
+								[
+									tocss,
+									processString,
+								],
+								async(input, fn) => await fn(input),
+								content
+							);
+						default:
+							return content;
+					}
+				})()).trim()
 			}
 		),
 		{}
@@ -28,3 +60,4 @@ const reduce = require('await-reduce');
 		phrase(template, data)
 	);
 })();
+

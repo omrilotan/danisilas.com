@@ -16,22 +16,25 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: Create docs directory
-          command: mkdir -p docs
-      - run:
-          name: Copy assets
-          command: cp -r assets/* docs
-      - run:
           name: Create page
           command: npm start
       - run:
           name: Post to gh-pages
           command: curl ci-cd.net/v1/gh/pages | bash -s docs/.
+      - run:
+          name: CloufFlare - Purge everything
+          command: |
+            curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${CF_ZONE}/purge_cache" \
+             -H "X-Auth-Email: ${CF_EMAIL}" \
+             -H "X-Auth-Key: ${CF_API_KEY}" \
+             -H "Content-Type: application/json" \
+             --data '{"purge_everything":true}'
 workflows:
   version: 2
   website:
     jobs:
       - build:
+          context: globalenv
           filters:
             branches:
               only:
