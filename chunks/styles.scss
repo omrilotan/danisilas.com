@@ -87,7 +87,7 @@ input, textarea, button {
 	box-sizing: border-box;
 	border: 1px solid #000;
 	width: 100%;
-	font-weight: 100;
+	font: inherit;
 	padding: .25em;
 }
 
