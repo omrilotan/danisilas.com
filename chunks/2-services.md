@@ -9,6 +9,6 @@
 
 </div>
 
-<span class="credits">
-Icons from the <a href="https://thenounproject.com/">Noun Project</a>: Shop by Llisole, Restaurant by Made, Office by Atif, Industrial by priyanka
-</span>
+```
+Icons from the Noun Project: Shop by Llisole, Restaurant by Made, Office by Atif, Industrial by priyanka
+```

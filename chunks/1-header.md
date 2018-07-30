@@ -6,6 +6,6 @@
 
 ![](./RICS.png)
 
-<span class="credits">
-Background by <a href="https://unsplash.com/@robertbye">Rob Bye</a>
-</span>
+```
+Background by Rob Bye (unsplash)
+```

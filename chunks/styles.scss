@@ -10,6 +10,10 @@ body {
 	font: 100 100%/1.4 -apple-system, "BlinkMacSystemFont", "Helvetica Neue", "Helvetica", "Lucida Grande", "Arial", sans-serif;
 }
 
+img {
+	max-width: 100%;
+}
+
 header,
 article,
 footer {
@@ -25,12 +29,19 @@ footer {
 	box-sizing:border-box;
 	position: relative;
 }
-.credits {
-	font-size: .6em;
+pre {
 	position: absolute;
 	right: 0;
 	bottom: 0;
 	padding: 5px;
+	white-space: normal;
+	text-align: right;
+	font: inherit;
+
+	code {
+		font: inherit;
+		font-size: .7em;
+	}
 }
 
 hr {
@@ -55,6 +66,12 @@ footer {
 
 	h4 {
 		text-align: center;
+	}
+
+	img {
+		height: 100px;
+		max-height: 18vw;
+		max-width: 18vw;
 	}
 }
 
@@ -97,10 +114,6 @@ a {
 		width: 50%;
 		padding: 0 1em;
 	}
-}
-
-h4 img {
-	height: 100px;
 }
 
 input, textarea, button {
