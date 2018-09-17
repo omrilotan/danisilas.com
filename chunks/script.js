@@ -20,8 +20,29 @@ window.addEventListener('DOMContentLoaded', function() {
 		nodes.amend.parentNode && nodes.amend.parentNode.removeChild(nodes.amend);
 		nodes.contactme.parentNode.replaceChild(nodes.waiting, nodes.contactme);
 
-		var data = [].reduce.call(
-			nodes.contactme,
+		var data = serialise(nodes.contactme);
+
+		if (!data.name || !data.contact) {
+			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+			nodes.contactme.parentNode.insertBefore(nodes.amend, nodes.contactme);
+			return;
+		}
+
+		data.date = new Date().toUTCString();
+
+		fetch(
+				nodes.contactme.action + queryfy(data)
+		).then(function (response) {
+			nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
+		}).catch(function (error) {
+			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+			nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
+		});
+	}
+
+	function serialise(form) {
+		return [].reduce.call(
+			form,
 			function(accumulator, item) {
 				if (item.value) {
 					accumulator[item.name] = item.value;
@@ -30,31 +51,23 @@ window.addEventListener('DOMContentLoaded', function() {
 			},
 			{}
 		);
+	}
 
-		if (!data.name || !data.contact) {
-			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-			nodes.contactme.parentNode.insertBefore(nodes.amend, nodes.contactme);
-			return;
-		}
-
-		fetch(nodes.contactme.action, {
-			headers: {'Content-Type': 'application/json; charset=utf-8'},
-			method: 'POST',
-			mode: 'cors',
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			redirect: 'follow',
-			referrer: 'no-referrer',
-			body: JSON.stringify(data),
-		}).then(function (response) {
-			if (response.ok) {
-				nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
-			} else {
-				throw new Error(response.statusText);
-			}
-		}).catch(function (error) {
-			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-			nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
-		});
+	var entries = {
+		name: 'entry.1419581890',
+		contact: 'entry.367634920',
+		message: 'entry.1892559927',
+		date: 'entry.1624056495',
+	};
+	function queryfy(data) {
+		return Object.keys(entries).reduce(
+			function (accumulator, key) {
+				accumulator.push(
+					[entries[key], encodeURIComponent(data[key])].join('=')
+				);
+				return accumulator;
+			},
+			[]
+		).join('&');
 	}
 });
