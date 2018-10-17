@@ -45,7 +45,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			form,
 			function(accumulator, item) {
 				if (item.value) {
-					accumulator[item.name] = item.value;
+					accumulator[item.name] = item.value.trim();
 				}
 				return accumulator;
 			},
