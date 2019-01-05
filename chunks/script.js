@@ -35,8 +35,11 @@ window.addEventListener('DOMContentLoaded', function() {
 		).then(function (response) {
 			nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
 		}).catch(function (error) {
-			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-			nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
+			// TODO: Temporarily disabling error message (triggered by CORS)
+			// Resolve by switching form provider
+			nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
+			// nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+			// nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
 		});
 	}
 

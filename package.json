@@ -9,15 +9,16 @@
     "url": "git+https://github.com/omrilotan/danialias.com.git"
   },
   "scripts": {
-    "start": "./scripts/build.sh"
+    "start": "./scripts/build.sh",
+    "test": "NODE_ENV=development ./scripts/build.sh"
   },
   "devDependencies": {
-    "await-reduce": "^1.1.1",
+    "await-reduce": "^1.2.3",
     "babel-core": "^6.26.3",
-    "marked": "^0.4.0",
-    "node-sass": "^4.9.2",
-    "paraphrase": "^1.2.2",
-    "uglify-js": "^3.4.5",
+    "marked": "^0.6.0",
+    "node-sass": "^4.11.0",
+    "paraphrase": "^1.6.0",
+    "uglify-js": "^3.4.9",
     "uglifycss": "0.0.29"
   },
   "private": true
