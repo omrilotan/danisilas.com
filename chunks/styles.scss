@@ -167,3 +167,29 @@ button {
 		}
 	}
 }
+
+@media print {
+	* {
+		background: none !important;
+		color: black !important;
+	}
+
+	[no-print] {
+		display: none;
+	}
+
+	header,
+	article,
+	footer {
+		min-height: auto;
+		display: block;
+		padding: 1em 2em 0;
+	}
+
+	header p img {
+		display: none;
+	}
+
+	h1 { font-size: 1.8em; }
+	h2, h3, h4 { font-size: 1.2em; }
+}
