@@ -8,6 +8,7 @@ body {
 	color: #000;
 	background: #fff;
 	font: 100 100%/1.4 -apple-system, "BlinkMacSystemFont", "Helvetica Neue", "Helvetica", "Lucida Grande", "Arial", sans-serif;
+	scroll-snap-type: y proximity;
 }
 
 img {
@@ -17,6 +18,7 @@ img {
 header,
 article,
 footer {
+	scroll-snap-align: start;
 	min-height: 100%;
 	background: #fff center center fixed no-repeat;
 	background-size: cover;
@@ -155,6 +157,27 @@ button {
 	box-shadow: 0 0 0 1px #000;
 }
 
+a[href^="#"] {
+	content: ' ';
+	display: block;
+	position: absolute;
+  left: 50%;
+  bottom: 2em;
+	width: 4em;
+	height: 4em;
+	margin: 0 0 0 -2em;
+	transform: rotate(135deg);
+	transform-origin: center;
+
+	box-shadow: 5px -5px 0 -4px rgba(255, 255, 255, .75),
+						  5px -5px 0 -3px rgba(0, 0, 0, .75);
+  border-radius: 1.5em;
+}
+.dark a[href^="#"] {
+	box-shadow: 5px -5px 0 -4px rgba(0, 0, 0, .75),
+						  5px -5px 0 -3px rgba(255, 255, 255, .75);
+}
+
 @media (max-width: 800px) {
 	header,
 	article {
@@ -173,6 +196,10 @@ button {
 			width: 100%;
 		  padding: 0;
 		}
+	}
+
+	a[href^="#"] {
+		display: none;
 	}
 }
 

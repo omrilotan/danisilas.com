@@ -73,4 +73,17 @@ window.addEventListener('DOMContentLoaded', function() {
 			[]
 		).join('&');
 	}
+
+	[].forEach.call(
+		document.querySelectorAll('a[href^="#"]'),
+		function (target) {
+			target.addEventListener('click', function(event) {
+				event.preventDefault();
+
+				var destination = document.querySelector('[name="' + target.getAttribute('href').replace('#', '') + '"]');
+
+				destination.scrollIntoView({behavior: 'smooth'});
+			});
+		}
+	);
 });
