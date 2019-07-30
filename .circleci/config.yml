@@ -1,9 +1,9 @@
-version: 2
+version: 2.1
 jobs:
   build:
     working_directory: ~/app
     docker:
-      - image: circleci/node:10.2
+      - image: circleci/node:12
     steps:
       - checkout
       - restore_cache:
@@ -30,7 +30,7 @@ jobs:
              -H "Content-Type: application/json" \
              --data '{"purge_everything":true}'
 workflows:
-  version: 2
+  version: 2.1
   website:
     jobs:
       - build:
