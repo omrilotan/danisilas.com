@@ -1,0 +1,37 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install node modules
+      run: npm i
+    - name: Create page
+      run: npm start
+    - name: Post to gh-pages
+      run: |
+        git config --global user.name $(git log -1 --pretty=%an)
+        git config --global user.email $(git log -1 --pretty=%ae)
+        git clone -b gh-pages --single-branch $("https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git") GHPAGES_DIR
+        cd GHPAGES_DIR
+        ls | grep -v CNAME | xargs rm -rf
+        cp -R docs GHPAGES_DIR
+        cd GHPAGES_DIR
+        git add .
+        git commit -m "$(curl -s whatthecommit.com/index.txt)"
+        git push origin gh-pages
+        cd ../
+    - name: CloufFlare - Purge everything
+      run: |
+        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${secrets.CF_ZONE}/purge_cache" \
+         -H "X-Auth-Email: ${secrets.CF_EMAIL}" \
+         -H "X-Auth-Key: ${secrets.CF_API_KEY}" \
+         -H "Content-Type: application/json" \
+         --data '{"purge_everything":true}'
+

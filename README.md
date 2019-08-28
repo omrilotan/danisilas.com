@@ -1,6 +1,6 @@
 # Dan I Silas. Chartered Surveyor
 
-The website files for [danisilas.com](http://danisilas.com) [![](https://circleci.com/gh/omrilotan/danisilas.com.svg?style=svg)](https://circleci.com/gh/omrilotan/danisilas.com)
+The website files for [danisilas.com](http://danisilas.com) [![](https://circleci.com/gh/omrilotan/danisilas.com.svg?style=svg)](https://circleci.com/gh/omrilotan/danisilas.com) ![](https://github.com/omrilotan/danisilas.com/workflows/publish/badge.svg)
 
 ## Suggest edits
 
