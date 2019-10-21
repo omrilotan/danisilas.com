@@ -16,14 +16,14 @@ jobs:
       run: npm start
     - name: Post to gh-pages
       run: |
-        git config --global user.name $(git log -1 --pretty=%an)
-        git config --global user.email $(git log -1 --pretty=%ae)
         git clone -b gh-pages --single-branch https://omrilotan:{TOKEN}@github.com/${GITHUB_REPOSITORY}.git GHPAGES_DIR
         cd GHPAGES_DIR
         ls | grep -v CNAME | xargs rm -rf
         cp -R ../docs .
         git add .
-        git commit -m "$(curl -s whatthecommit.com/index.txt)"
+        git remote rm origin
+        git remote add origin https://omrilotan:{TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        npx committee omrilotan
         git push origin gh-pages
         cd ../
     - name: CloufFlare - Purge everything

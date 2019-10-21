@@ -34,6 +34,8 @@ const processors = {
 					const content = await read(`./chunks/${slide}`);
 
 					switch (slide.split('.').pop()) {
+						case 'html':
+							return content;
 						case 'md':
 							return await marked(content, {});
 						case 'js':
