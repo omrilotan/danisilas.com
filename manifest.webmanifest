@@ -3,12 +3,12 @@
 	"name": "Dan I Silas. Chartered Surveyor",
 	"icons": [
 		{
-			"src": "/assets/noun-shop.png",
+			"src": "/noun-shop.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "/assets/noun-shop.png",
+			"src": "/noun-shop.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}
