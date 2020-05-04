@@ -261,4 +261,8 @@ h1 img {
 		display: block;
 		margin: 0 auto;
 	}
+
+	a[href^="#"] {
+		display: none;
+	}
 }
