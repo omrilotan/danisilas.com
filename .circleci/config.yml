@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/app
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14
     steps:
       - checkout
       - run:
@@ -11,7 +11,7 @@ jobs:
           command: npm i
       - run:
           name: Create page
-          command: npm start
+          command: npm run build
       - run:
           name: Post to gh-pages
           command: curl ci-cd.net/v1/gh/pages | bash -s docs/.
