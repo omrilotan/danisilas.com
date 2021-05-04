@@ -31,22 +31,22 @@ html(lang="en-GB")
 		title Dan I Silas. Chartered Surveyor
 	body
 		header(class="dark" style="background-image: url(./london-rob-bye-unsplash.jpg);")
-			include:md ./1-header.md
+			include ./1-header.pug
 			pre(no-print)
 				code Background by Rob Bye (unsplash)
 			a(href="#services")
 		article(no-print name="services")
-			include:md ./2-services.md
+			include ./2-services.pug
 			br
 			br
-			include ./3-contact-form.html
+			include ./3-contact-form.pug
 			a(href="#about")
 		article(name="about" class="dark" style="background-image: url(./about-background.jpg);")
 			div(style="text-align:left")
-				include:md ./4-about.md
+				include ./4-about.pug
 			a(href="#address")
 		article(name="address" class="contact")
-			include:md ./5-contact.md
+			include ./5-contact.pug
 			a(href="#map")
 		footer(name="map" no-print)
 		script(src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" crossorigin="anonymous")
