@@ -1,3 +1,5 @@
+let count = 0;
+
 if (document.readyState === 'complete') {
 	utiliseForm();
 } else {
@@ -15,7 +17,8 @@ function utiliseForm() {
 		error: document.createElement('p'),
 		amend: document.createElement('p'),
 		waiting: document.createElement('p'),
-		success: document.createElement('p'),
+		success: document.createElement('h3'),
+		failed: document.createElement('h3'),
 		contactme: contactme
 	};
 	nodes.error.className = 'error';
@@ -24,6 +27,12 @@ function utiliseForm() {
 	nodes.amend.appendChild(document.createTextNode('Please fill out name and contact method.'));
 	nodes.waiting.appendChild(document.createTextNode('Thank you'));
 	nodes.success.appendChild(document.createTextNode('I will return to you shortly'));
+	nodes.failed.appendChild(document.createTextNode('Sorry, the form was not sent.'));
+	var contactLink = document.createElement('a');
+	contactLink.setAttribute('href', '#address')
+	contactLink.appendChild(document.createTextNode('Please try a different contact method.'));
+	nodes.failed.appendChild(document.createElement('br'))
+	nodes.failed.appendChild(contactLink);
 
 	nodes.contactme.onsubmit = function(event) {
 		event.preventDefault();
@@ -33,6 +42,7 @@ function utiliseForm() {
 		nodes.contactme.parentNode.replaceChild(nodes.waiting, nodes.contactme);
 
 		var data = serialise(nodes.contactme);
+		data.subject = 'Message from danisilas.com'
 
 		if (!data.name || !data.contact) {
 			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
@@ -43,61 +53,64 @@ function utiliseForm() {
 		data.date = new Date().toUTCString();
 
 		fetch(
-				nodes.contactme.action + queryfy(data)
+				nodes.contactme.action,
+				{
+					headers: {'Content-Type': 'application/json; charset=utf-8'},
+					method: 'POST',
+					mode: 'cors',
+					cache: 'no-cache',
+					credentials: 'same-origin',
+					redirect: 'follow',
+					referrer: 'no-referrer',
+					body: JSON.stringify(data)
+				}
 		).then(function (response) {
+			if (!response.ok) {
+				throw new Error('Request failed');
+			}
 			nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
-		}).catch(function (error) {
-			// TODO: Temporarily disabling error message (triggered by CORS)
-			// Resolve by switching form provider
-			nodes.waiting.parentNode.replaceChild(nodes.success, nodes.waiting);
-			// nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
-			// nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
+		}).catch(function (err) {
+			if (count > 3) {
+				nodes.waiting.parentNode.replaceChild(nodes.failed, nodes.waiting);
+				return
+			}
+
+			const error = new Error('Failed to send contact form');
+			setTimeout(function() { throw error; });
+
+			nodes.waiting.parentNode.replaceChild(nodes.contactme, nodes.waiting);
+			nodes.contactme.parentNode.insertBefore(nodes.error, nodes.contactme);
+			count++
 		});
 	}
 
 	function serialise(form) {
 		return [].reduce.call(
-			form,
-			function(accumulator, item) {
-				if (item.value) {
-					accumulator[item.name] = item.value.trim();
-				}
-				return accumulator;
-			},
-			{}
-		);
-	}
-
-	var entries = {
-		name: 'entry.1419581890',
-		contact: 'entry.367634920',
-		message: 'entry.1892559927',
-		date: 'entry.1624056495',
-	};
-	function queryfy(data) {
-		return Object.keys(entries).reduce(
-			function (accumulator, key) {
-				accumulator.push(
-					[entries[key], encodeURIComponent(data[key])].join('=')
-				);
-				return accumulator;
-			},
-			[]
-		).join('&');
+				form,
+				(accumulator, {name, value}) => value ? Object.assign(
+					accumulator,
+					{ [name]: value.trim() }
+				) : accumulator,
+				{}
+			);
 	}
 
 	[].forEach.call(
 		document.querySelectorAll('a[href^="#"]'),
-		function (target) {
-			target.addEventListener('click', function(event) {
-				event.preventDefault();
-
-				var destination = document.querySelector('[name="' + target.getAttribute('href').replace('#', '') + '"]');
-
-				destination.scrollIntoView({behavior: 'smooth'});
-			});
-		}
+		replaceAnchorBehaviour
 	);
+
+	replaceAnchorBehaviour(contactLink);
+}
+
+function replaceAnchorBehaviour(anchor) {
+	anchor.addEventListener('click', function(event) {
+		event.preventDefault();
+
+		var destination = document.querySelector('[name="' + anchor.getAttribute('href').replace('#', '') + '"]');
+
+		destination.scrollIntoView({behavior: 'smooth'});
+	});
 }
 
 function loadMap() {

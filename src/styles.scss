@@ -162,7 +162,7 @@ button {
 	vertical-align: middle;
 }
 
-a[href^="#"] {
+article > a[href^="#"] {
 	content: ' ';
 	display: block;
 	position: absolute;

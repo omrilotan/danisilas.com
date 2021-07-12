@@ -1,4 +1,4 @@
-form(id="contactme" action="https://docs.google.com/forms/d/e/1FAIpQLSeib1eBeworQr8mjgJDUq79bD-3ZO5kqDZcisWYc-4znZp3ow/formResponse?")
+form(id="contactme" action="https://contact-form-service.herokuapp.com/v1/email?to=dan@danisilas.com" method="post")
 	div(class="box")
 		section
 			input(type="text" name="name" title="name" placeholder="Name" value="")
@@ -9,3 +9,4 @@ form(id="contactme" action="https://docs.google.com/forms/d/e/1FAIpQLSeib1eBewor
 		section(style="width:100%")
 			button Contact me
 	br
+	input(type="hidden" name="token" value="a6d7515b31a2d7e85d")
