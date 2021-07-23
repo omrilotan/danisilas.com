@@ -1,4 +1,7 @@
 let count = 0;
+function destination (action) {
+	return action.replace(/\?to=.*/, '?to=' + document.querySelector('a[href^="mailto:"]').innerText)
+}
 
 if (document.readyState === 'complete') {
 	utiliseForm();
@@ -53,7 +56,7 @@ function utiliseForm() {
 		data.date = new Date().toUTCString();
 
 		fetch(
-				nodes.contactme.action,
+				destination(nodes.contactme.action),
 				{
 					headers: {'Content-Type': 'application/json; charset=utf-8'},
 					method: 'POST',
