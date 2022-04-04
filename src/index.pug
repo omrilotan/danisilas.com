@@ -34,20 +34,20 @@ html(lang="en-GB")
 			include ./1-header.pug
 			pre(no-print)
 				code Background by Rob Bye (unsplash)
-			a(href="#services")
+			a(href="#services" aria-label="Services")
 		article(no-print name="services")
 			include ./2-services.pug
 			br
 			br
 			include ./3-contact-form.pug
-			a(href="#about")
+			a(href="#about" aria-label="About")
 		article(name="about" class="dark" style="background-image: url(./about-background.webp);")
 			div(style="text-align:left")
 				include ./4-about.pug
-			a(href="#address")
+			a(href="#address" aria-label="Address")
 		article(name="address" class="contact")
 			include ./5-contact.pug
-			a(href="#map")
+			a(href="#map" aria-label="Map")
 		footer(name="map" no-print)
 		script(src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" crossorigin="anonymous")
 		script(async="async").
