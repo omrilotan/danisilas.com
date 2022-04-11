@@ -268,6 +268,6 @@ h1 img {
 	}
 
 	a[href^="#"] {
-		display: none;
+		display: none !important;
 	}
 }
