@@ -1,9 +1,10 @@
 {
   "name": "danisilas.com",
   "version": "1.0.0",
+  "private": true,
   "description": "The website files for danisilas.com",
   "homepage": "https://danisilas.com",
-  "license": "MIT",
+  "license": "unlicense",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/omrilotan/danialias.com.git"
@@ -14,10 +15,9 @@
     "postbuild": "cp assets/* docs"
   },
   "devDependencies": {
-    "markdown-it": "^13.0.0",
+    "markdown-it": "^13.0.1",
     "parcel-bundler": "^1.12.4",
     "pug": "^3.0.0",
-    "sass": "^1.26.10"
-  },
-  "private": true
+    "sass": "^1.54.8"
+  }
 }
