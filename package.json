@@ -15,7 +15,7 @@
     "postbuild": "cp assets/* docs"
   },
   "devDependencies": {
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.0.0",
     "parcel-bundler": "^1.12.4",
     "pug": "^3.0.0",
     "sass": "^1.54.8"
