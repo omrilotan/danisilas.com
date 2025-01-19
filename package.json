@@ -12,7 +12,7 @@
   "scripts": {
     "start": "parcel src/index.pug --out-dir docs",
     "build": "parcel build src/index.pug --out-dir docs --public-url .",
-    "postbuild": "cp assets/* docs"
+    "postbuild": "cp src/assets/* docs"
   },
   "devDependencies": {
     "markdown-it": "^14.0.0",
